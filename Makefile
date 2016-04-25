@@ -38,20 +38,20 @@ PKGS := $(shell go list -tags "$(BUILDTAGS)" ./... | grep -v "/Godeps/" | grep -
 PKG_GOFILE := $(shell find ./pkg -type f -name '*.go')
 PKG_GOFILE_WITHOUT_TEST := $(filter-out %_test.go, $(PKG_GOFILE))
 
-default: build
+SERVICENAME := $(service)
 
+default: build
 ############## build ##################
 build: server client
 
 server: build-server
-build-server: $(PREFIX)/bin/server
-$(PREFIX)/bin/server: $(PREFIX)/cmd/server.go $(PKG_GOFILE_WITHOUT_TEST)
+build-server: $(PREFIX)/bin/$(SERVICENAME)server
+$(PREFIX)/bin/$(SERVICENAME)server: $(PREFIX)/cmd/$(SERVICENAME)server.go $(PKG_GOFILE_WITHOUT_TEST)
 	$(GO) build -o $@ $(VERBOSE_GO) -tags "$(BUILDTAGS)" -ldflags "$(GO_LDFLAGS)" $(GO_GCFLAGS) $<
 
-
-server: build-client
-build-client: $(PREFIX)/bin/client
-$(PREFIX)/bin/client: $(PREFIX)/cmd/client.go $(PKG_GOFILE_WITHOUT_TEST)
+client: build-client
+build-client: $(PREFIX)/bin/$(SERVICENAME)client
+$(PREFIX)/bin/$(SERVICENAME)client: $(PREFIX)/cmd/$(SERVICENAME)client.go $(PKG_GOFILE_WITHOUT_TEST)
 	$(GO) build -o $@ $(VERBOSE_GO) -tags "$(BUILDTAGS)" -ldflags "$(GO_LDFLAGS)" $(GO_GCFLAGS) $<
 
 
@@ -78,10 +78,3 @@ vet: build
 
 clean:
 	$(RM) -r $(PREFIX)/bin
-	$(RM) -r $(PREFIX)/output
-
-image:
-	@echo "build binary in docker..."
-	./build/build-in-docker/build-in-docker.sh
-	@echo "build image ..."
-	./build/build-ucre-image/build-ucre-image.sh

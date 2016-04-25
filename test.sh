@@ -1,4 +1,4 @@
-#!/bin/bash - 
-killall -9 server
-./bin/server &
-./bin/client
+#!/bin/bash -
+killall -9 $1server
+./bin/$1server &
+./bin/$1client
