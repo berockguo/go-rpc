@@ -12,6 +12,7 @@ func main() {
 	if err != nil {
 		return
 	}
+
 	pb.RegisterUcreHelloWorldServer(s.GRpcServer, &server.Server{})
 	err = s.Serve()
 	if err != nil {

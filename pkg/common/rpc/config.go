@@ -17,9 +17,9 @@ func NewConfig(name string) *Config {
 }
 
 func (o *Config) ServerAddress() (string, error) {
-	conf := goini.SetConfig("etc/" + o.ServiceName + ".conf")
-	ip := conf.GetValue("Server", "ip")
-	port := conf.GetValue("Server", "port")
+	conf := goini.SetConfig("etc/route.conf")
+	ip := conf.GetValue(o.ServiceName, "ip")
+	port := conf.GetValue(o.ServiceName, "port")
 	if strings.Compare(port, "no value") == 0 {
 		return port, &util.Error{"empty value"}
 	}
@@ -27,8 +27,8 @@ func (o *Config) ServerAddress() (string, error) {
 	return s, nil
 }
 func (o *Config) ServerPort() (string, error) {
-	conf := goini.SetConfig("etc/" + o.ServiceName + ".conf")
-	port := conf.GetValue("Server", "port")
+	conf := goini.SetConfig("etc/route.conf")
+	port := conf.GetValue(o.ServiceName, "port")
 	if strings.Compare(port, "no value") == 0 {
 		return port, &util.Error{"empty value"}
 	}
