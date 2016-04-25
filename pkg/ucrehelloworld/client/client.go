@@ -10,7 +10,7 @@ import (
 	"golang.org/x/net/context"
 )
 
-func Client() (*grpc.ClientConn, pb.UcreHelloWorldClient, error) {
+func client() (*grpc.ClientConn, pb.UcreHelloWorldClient, error) {
 	client := *new(pb.UcreHelloWorldClient)
 	conn, err := rpc.Connect(define.ServiceName)
 	if err != nil {
@@ -22,7 +22,7 @@ func Client() (*grpc.ClientConn, pb.UcreHelloWorldClient, error) {
 
 func SayHello(ctx context.Context, req *pb.SayHelloRequest) (*pb.SayHelloResponse, error) {
 	resp := new(pb.SayHelloResponse)
-	conn, client, err := Client()
+	conn, client, err := client()
 	defer conn.Close()
 	if err != nil {
 		return resp, err
