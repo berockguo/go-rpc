@@ -3,7 +3,7 @@ package rpc
 import (
 	"net"
 
-	"gitlab.ucloudadmin.com/ucre/rpc/common/util"
+	"gitlab.ucloudadmin.com/ucre/rpc/pkg/common/util"
 
 	"google.golang.org/grpc"
 )

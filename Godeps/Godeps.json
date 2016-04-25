@@ -1,5 +1,5 @@
 {
-	"ImportPath": "gitlab.ucloudadmin.com/ucre/rpc/ucrehelloworld",
+	"ImportPath": "gitlab.ucloudadmin.com/ucre/rpc",
 	"GoVersion": "go1.6",
 	"GodepVersion": "v62",
 	"Packages": [

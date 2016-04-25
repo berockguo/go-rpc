@@ -3,7 +3,7 @@ package rpc
 import (
 	"strings"
 
-	"gitlab.ucloudadmin.com/ucre/rpc/common/util"
+	"gitlab.ucloudadmin.com/ucre/rpc/pkg/common/util"
 
 	"github.com/berockguo/goini"
 )

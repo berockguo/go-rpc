@@ -4,9 +4,9 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"google.golang.org/grpc"
 
-	"gitlab.ucloudadmin.com/ucre/rpc/common/rpc"
-	"gitlab.ucloudadmin.com/ucre/rpc/ucrehelloworld/pkg/define"
-	pb "gitlab.ucloudadmin.com/ucre/rpc/ucrehelloworld/protos"
+	"gitlab.ucloudadmin.com/ucre/rpc/pkg/common/rpc"
+	"gitlab.ucloudadmin.com/ucre/rpc/pkg/ucrehelloworld/define"
+	pb "gitlab.ucloudadmin.com/ucre/rpc/pkg/ucrehelloworld/protos"
 	"golang.org/x/net/context"
 )
 
