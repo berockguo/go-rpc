@@ -2,6 +2,7 @@ package client
 
 import (
 	log "github.com/Sirupsen/logrus"
+	"google.golang.org/grpc"
 
 	"gitlab.ucloudadmin.com/ucre/rpc/common/rpc"
 	"gitlab.ucloudadmin.com/ucre/rpc/ucrehelloworld/pkg/define"
@@ -9,15 +10,24 @@ import (
 	"golang.org/x/net/context"
 )
 
+func Client() (*grpc.ClientConn, pb.UcreHelloWorldClient, error) {
+	client := *new(pb.UcreHelloWorldClient)
+	conn, err := rpc.Connect(define.ServiceName)
+	if err != nil {
+		return conn, client, err
+	}
+	client = pb.NewUcreHelloWorldClient(conn)
+	return conn, client, nil
+}
+
 func SayHello(ctx context.Context, req *pb.SayHelloRequest) (*pb.SayHelloResponse, error) {
 	resp := new(pb.SayHelloResponse)
-	conn, err := rpc.Connect(define.ServiceName)
+	conn, client, err := Client()
+	defer conn.Close()
 	if err != nil {
 		return resp, err
 	}
-	defer conn.Close()
-	c := pb.NewUcreHelloWorldClient(conn)
-	resp, err = c.SayHello(ctx, req)
+	resp, err = client.SayHello(ctx, req)
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 		return resp, err
