@@ -6,7 +6,7 @@ import (
 
 	"gitlab.ucloudadmin.com/ucre/rpc/pkg/common/rpc"
 	"gitlab.ucloudadmin.com/ucre/rpc/pkg/ucrehelloworld/define"
-	pb "gitlab.ucloudadmin.com/ucre/rpc/pkg/ucrehelloworld/protos"
+	pb "gitlab.ucloudadmin.com/ucre/rpc/pkg/ucrehelloworld/proto"
 	"golang.org/x/net/context"
 )
 
@@ -32,6 +32,6 @@ func SayHello(ctx context.Context, req *pb.SayHelloRequest) (*pb.SayHelloRespons
 		log.Fatalf("could not greet: %v", err)
 		return resp, err
 	}
-	log.Printf("Ucre SayHello: %s", resp.Message)
+	log.Printf("Ucre SayHello: %s", resp.Ret.Retmsg)
 	return resp, nil
 }

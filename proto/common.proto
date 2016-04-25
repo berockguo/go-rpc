@@ -1,0 +1,8 @@
+syntax = "proto2";
+
+package common;
+
+message Ret{
+  optional uint64 retcode     = 1;
+  optional string retmsg      = 2;
+}

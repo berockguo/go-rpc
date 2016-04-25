@@ -3,7 +3,7 @@ package main
 import (
 	"gitlab.ucloudadmin.com/ucre/rpc/pkg/common/rpc"
 	"gitlab.ucloudadmin.com/ucre/rpc/pkg/ucrehelloworld/define"
-	pb "gitlab.ucloudadmin.com/ucre/rpc/pkg/ucrehelloworld/protos"
+	pb "gitlab.ucloudadmin.com/ucre/rpc/pkg/ucrehelloworld/proto"
 	"gitlab.ucloudadmin.com/ucre/rpc/pkg/ucrehelloworld/server"
 )
 

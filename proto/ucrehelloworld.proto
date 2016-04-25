@@ -1,5 +1,5 @@
-syntax = "proto3";
-
+syntax = "proto2";
+import "common.proto";
 package ucrehelloworld;
 
 service UcreHelloWorld {
@@ -7,9 +7,9 @@ service UcreHelloWorld {
 }
 
 message SayHelloRequest {
-  string name = 1;
+  optional string     name    = 1;
 }
 
 message SayHelloResponse {
-  string message = 1;
+  optional common.Ret ret     = 1;
 }
