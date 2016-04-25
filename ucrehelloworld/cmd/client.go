@@ -5,7 +5,7 @@ import (
 
 	log "github.com/Sirupsen/logrus"
 
-	"gitlab.ucloudadmin.com/ucre/rpc/ucrehelloworld/pkg/config"
+	"gitlab.ucloudadmin.com/ucre/rpc/common/rpc"
 	pb "gitlab.ucloudadmin.com/ucre/rpc/ucrehelloworld/protos"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
@@ -13,12 +13,14 @@ import (
 
 const (
 	defaultName = "world"
+	ServiceName = "ucrehelloworld"
 )
 
 func main() {
 	// Set up a connection to the server.
-	address, ok := config.ServerAddress()
-	if !ok {
+	config := rpc.NewConfig(ServiceName)
+	address, err := config.ServerAddress()
+	if err != nil {
 		log.Fatalf("read config file failed")
 		return
 	}

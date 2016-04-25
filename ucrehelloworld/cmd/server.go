@@ -1,13 +1,13 @@
 package main
 
 import (
-	"net"
-
-	log "github.com/Sirupsen/logrus"
-	"gitlab.ucloudadmin.com/ucre/rpc/ucrehelloworld/pkg/config"
+	"gitlab.ucloudadmin.com/ucre/rpc/common/rpc"
 	pb "gitlab.ucloudadmin.com/ucre/rpc/ucrehelloworld/protos"
 	"golang.org/x/net/context"
-	"google.golang.org/grpc"
+)
+
+const (
+	ServiceName = "ucrehelloworld"
 )
 
 type server struct{}
@@ -17,16 +17,13 @@ func (s *server) SayHello(ctx context.Context, in *pb.SayHelloRequest) (*pb.SayH
 }
 
 func main() {
-	port, ok := config.ServerPort()
-	if !ok {
-		log.Fatalf("read config file failed")
+	s, err := rpc.NewServer(ServiceName)
+	if err != nil {
 		return
 	}
-	lis, err := net.Listen("tcp", port)
+	pb.RegisterUcreHelloWorldServer(s.GRpcServer, &server{})
+	err = s.Serve()
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		return
 	}
-	s := grpc.NewServer()
-	pb.RegisterUcreHelloWorldServer(s, &server{})
-	s.Serve(lis)
 }
