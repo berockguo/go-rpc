@@ -1,0 +1,126 @@
+package asset;
+
+// ObjectMeta is meta data that all persisted resources must have. 
+message ObjectMeta {
+    optional    string  uid = 1;
+    optional    string  name = 2;
+    optional    string  resource_version  = 3;
+    optional    string  creation_timestamp  = 4;
+    optional    string  deletion_timestamp  = 5;
+}
+
+
+// IDC represents the IDC resource
+message IDC {
+   optional    ObjectMeta   metadata    = 1;
+   optional    string       name        = 2;
+   optional    string       area        = 3;
+   optional    string       location    = 4;
+   repeated    Rack         racks       = 5;
+}
+
+// Rack represents the Rack resource in IDC.
+message Rack {
+   optional    ObjectMeta   metadata    = 1;
+   optional    string       rack_name   = 2;
+   optional    string       rack_unit   = 3;
+   repeated    Machine      machines    = 4;     
+}
+
+
+// hardware information.
+// CPUInfo
+message CPUInfo {
+    optional    string  manufacturer    = 1;
+    optional    string  vendor_id       = 2;
+    optional    string  model           = 3;
+    optional    float   cpu_MHZ         = 4;
+    optional    int32   cpu_processors  = 5;
+    optional    int32   cpu_cores       = 6;
+    optional    float   cache_size      = 7;
+    optional    string  arch            = 8;           
+}
+
+// Memory
+message Memory {
+    optional    string  manufacturer    = 1;
+    optional    string  serial_number   = 2;
+    optional    string  model           = 3;
+    optional    int64   total_memory    = 4;  
+    optional    string  speed           = 5;
+ 
+    enum MemStatus {
+        NORMAL      = 0;
+        ABNORMAL    = 1;
+    }
+    optional    MemStatus  status       = 6;
+}
+
+// NIC network device
+message NIC {
+    optional    string  manufacturer    = 1;
+    optional    string  serial_number   = 2;
+    optional    string  model           = 3;
+    optional    string  speed           = 4;
+    enum NICStatus {
+        NORMAL      = 0;
+        ABNORMAL    = 1;
+    }
+    optional    NICStatus  status       = 5;
+    
+}
+
+// Disk
+message Disk {
+    optional    string  manufacturer    = 1;
+    optional    string  serial_number   = 2;
+    optional    string  model           = 3;
+    optional    int64   capacity        = 4; // MB
+    
+    enum    DiskType {
+        HDD   =   0;
+        SSD   =   1;
+    }
+    optional    DiskType  type         = 5;
+}
+
+// Hardware represents the hardware of host.
+message Hardware {
+   optional    CPUInfo  cpuinfo       = 1;
+   repeated    Memory  	memory       = 2;
+   repeated    NIC      nic           = 3;
+   repeated    Disk     diskinfo      = 4;  
+} 
+
+// Networking 
+message Networking {
+    message IPAddress {
+        optional  string ip     = 1;
+        optional  string mac    = 2;
+        
+        enum IPAddressType {
+            INNER_IP    = 1;
+            OUTER_IP    = 2;
+        }
+        
+        optional  IPAddressType type = 3;
+    }
+    
+    repeated IPAddress  ip_address   = 1;
+}
+
+
+// Host represents the `Host` resource
+message Machine {
+    optional    ObjectMeta  metadata       = 1;
+    optional    string      manufacturer   = 2;
+    optional    string      model          = 3;
+    optional    string      host_name      = 4;
+    optional    string      machine_type   = 5;
+    optional    string      uuid           = 6;
+   
+    optional    IDC         idc         = 7;
+    optional    Rack        rack        = 8;
+    optional    Hardware    hardware    = 9;
+    optional    Networking  networking  = 10;
+}
