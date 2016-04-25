@@ -2,12 +2,9 @@ package main
 
 import (
 	"gitlab.ucloudadmin.com/ucre/rpc/common/rpc"
+	"gitlab.ucloudadmin.com/ucre/rpc/ucrehelloworld/pkg/define"
 	pb "gitlab.ucloudadmin.com/ucre/rpc/ucrehelloworld/protos"
 	"golang.org/x/net/context"
-)
-
-const (
-	ServiceName = "ucrehelloworld"
 )
 
 type server struct{}
@@ -17,7 +14,7 @@ func (s *server) SayHello(ctx context.Context, in *pb.SayHelloRequest) (*pb.SayH
 }
 
 func main() {
-	s, err := rpc.NewServer(ServiceName)
+	s, err := rpc.NewServer(define.ServiceName)
 	if err != nil {
 		return
 	}
